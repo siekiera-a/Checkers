@@ -6,14 +6,19 @@ import java.util.List;
 public class Pawn {
 
     private final Color color;
-    private Direction direction;
+    private final Direction direction;
 
     public Pawn(Color color, Direction direction) {
         this.color = color;
         this.direction = direction;
     }
 
-    public List<Position> movePositions(Position currentPosition) {
+    protected Pawn(Color color) {
+        this.color = color;
+        direction = Direction.TOP;
+    }
+
+    protected List<Position> movePositionsByDirection(Position currentPosition, Direction direction) {
         List<Position> positions = new ArrayList<>();
 
         Position leftPos;
@@ -29,7 +34,16 @@ public class Pawn {
 
         positions.add(leftPos);
         positions.add(rightPos);
+
         return positions;
+    }
+
+    public List<Position> movePositions(Position currentPosition) {
+        return movePositionsByDirection(currentPosition, direction);
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     enum Color {
