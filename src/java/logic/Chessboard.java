@@ -40,7 +40,7 @@ public class Chessboard {
 
         // place white pawns
         for (int row = BOARD_HEIGHT - 3; row < BOARD_HEIGHT; row++) {
-            for (int column = row % 2; column < BOARD_WIDTH; column += 2) {
+            for (int column = (row + 1) % 2; column < BOARD_WIDTH; column += 2) {
                 board[row][column] = new Pawn(Player.WHITE, Pawn.Direction.TOP);
             }
         }
