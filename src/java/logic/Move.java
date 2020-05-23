@@ -12,6 +12,9 @@ public class Move {
         this.availablePositions = availablePositions;
     }
 
+    /***
+     * check if there are capture moves
+     */
     public boolean captureMoves() {
         return availablePositions.stream()
             .anyMatch(pos -> Math.abs(pos.getX() - startPosition.getX()) > 1);

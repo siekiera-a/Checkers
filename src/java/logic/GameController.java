@@ -6,13 +6,15 @@ import java.util.stream.Collectors;
 public class GameController {
 
     private Chessboard chessboard;
+    private Player player;
 
-    private GameController() {
+    private GameController(Player startingPlayer) {
+        player = startingPlayer;
         chessboard = Chessboard.createChessboard();
     }
 
-    public static GameController startNewGame() {
-        return new GameController();
+    public static GameController startNewGame(Player startingPlayer) {
+        return new GameController(startingPlayer);
     }
 
     /**
@@ -45,9 +47,8 @@ public class GameController {
             .stream()
             .filter(pos -> isEnemy(pos, pawn))
             .map(pos -> {  // next diagonal field
-                int rowVector = pos.getY() - currentPosition.getY();
-                int columnVector = pos.getX() - currentPosition.getX();
-                return new Position(columnVector, rowVector);
+                int[] vector = getVector(currentPosition, pos);
+                return new Position(pos.getX() + vector[0], pos.getY() + vector[1]);
             })
             .filter(chessboard::fieldEmpty)
             .collect(Collectors.toList());
@@ -69,6 +70,58 @@ public class GameController {
             return new Move(pawnPosition, availablePositions);
         }
         return new Move(pawnPosition, capturePositions);
+    }
+
+    /***
+     * Move pawn to new position if possible
+     * @param currentPosition current pawn position
+     * @param newPosition new pawn position
+     * @return true if moved, otherwise false
+     */
+    public boolean move(Position currentPosition, Position newPosition) {
+        Pawn pawn = chessboard.getPawn(currentPosition);
+        if (pawn != null) {
+            Move move = availableMoves(pawn);
+            if (move.getAvailablePositions().contains(newPosition) && !move.captureMoves()) {
+                chessboard.movePawn(pawn, newPosition);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /***
+     * Jump over enemy if possible
+     * @param currentPosition current pawn position
+     * @param newPosition new pawn position
+     * @return true if jumped, false otherwise
+     */
+    public boolean jump(Position currentPosition, Position newPosition) {
+        Pawn pawn = chessboard.getPawn(currentPosition);
+        if (pawn != null) {
+            Move move = availableMoves(pawn);
+            if (move.captureMoves() && move.getAvailablePositions().contains(newPosition)) {
+                int[] vector = getVector(currentPosition, newPosition);
+                int enemyX = currentPosition.getX() + vector[0] / 2;
+                int enemyY = currentPosition.getY() + vector[1] / 2;
+                Position enemyPosition = new Position(enemyX, enemyY);
+                chessboard.removePawn(chessboard.getPawn(enemyPosition));
+                chessboard.movePawn(pawn, newPosition);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /***
+     * calc vector between from and to position
+     * @return vector [x, y]
+     */
+    private int[] getVector(Position from, Position to) {
+        int[] vector = new int[2];
+        vector[0] = to.getX() - from.getX();
+        vector[1] = to.getY() - from.getY();
+        return vector;
     }
 
 }
