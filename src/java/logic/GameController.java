@@ -31,7 +31,7 @@ public class GameController {
      */
     private boolean isEnemy(Position enemyPos, Pawn pawn) {
         Pawn enemy = chessboard.getPawn(enemyPos);
-        return enemy != null && enemy.getColor() != pawn.getColor();
+        return enemy != null && enemy.getPlayer() != pawn.getPlayer();
     }
 
     /**

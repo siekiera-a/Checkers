@@ -5,16 +5,16 @@ import java.util.List;
 
 public class Pawn {
 
-    private final Color color;
+    private final Player player;
     private final Direction direction;
 
-    public Pawn(Color color, Direction direction) {
-        this.color = color;
+    public Pawn(Player player, Direction direction) {
+        this.player = player;
         this.direction = direction;
     }
 
-    protected Pawn(Color color) {
-        this.color = color;
+    protected Pawn(Player player) {
+        this.player = player;
         direction = Direction.TOP;
     }
 
@@ -42,12 +42,8 @@ public class Pawn {
         return movePositionsByDirection(currentPosition, direction);
     }
 
-    public Color getColor() {
-        return color;
-    }
-
-    enum Color {
-        BLACK, WHITE
+    public Player getPlayer() {
+        return player;
     }
 
     enum Direction {

@@ -31,14 +31,14 @@ public class Chessboard {
         // place black pawns
         for (int row = 0; row < 3; row++) {
             for (int column = (row + 1) % 2; column < BOARD_WIDTH; column += 2) {
-                board[row][column] = new Pawn(Pawn.Color.BLACK, Pawn.Direction.BOTTOM);
+                board[row][column] = new Pawn(Player.BLACK, Pawn.Direction.BOTTOM);
             }
         }
 
         // place white pawns
         for (int row = BOARD_HEIGHT - 3; row < BOARD_HEIGHT; row++) {
             for (int column = row % 2; column < BOARD_WIDTH; column += 2) {
-                board[row][column] = new Pawn(Pawn.Color.WHITE, Pawn.Direction.TOP);
+                board[row][column] = new Pawn(Player.WHITE, Pawn.Direction.TOP);
             }
         }
 

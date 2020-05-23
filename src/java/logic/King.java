@@ -5,8 +5,8 @@ import java.util.List;
 
 public class King extends Pawn {
 
-    public King(Color color) {
-        super(color);
+    public King(Player player) {
+        super(player);
     }
 
     @Override
