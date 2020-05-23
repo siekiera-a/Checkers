@@ -1,5 +1,8 @@
 package logic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Chessboard {
 
     public final static int BOARD_WIDTH = 8;
@@ -114,6 +117,34 @@ public class Chessboard {
             board[newPosition.getY()][newPosition.getX()] = pawn;
             board[currentPosition.getY()][currentPosition.getX()] = null;
         }
+    }
+
+    /***
+     * Remove the pawn from the chessboard and place the king in his place
+     */
+    public void promoteToKing(Pawn pawn) {
+        Position pawnPosition = getPawnPosition(pawn);
+        if (pawnPosition != null) {
+            King king = new King(pawn.getPlayer());
+            removePawn(pawn);
+            board[pawnPosition.getY()][pawnPosition.getX()] = king;
+        }
+    }
+
+    /**
+     * @return List of player pawns
+     */
+    public List<Pawn> getPlayerPawns(Player player) {
+        List<Pawn> pawns = new ArrayList<>();
+        for (int row = 0; row < BOARD_HEIGHT; row++) {
+            for (int column = 0; column < BOARD_WIDTH; column++) {
+                Pawn pawn = board[row][column];
+                if (pawn.getPlayer() == player) {
+                    pawns.add(pawn);
+                }
+            }
+        }
+        return pawns;
     }
 
 }
