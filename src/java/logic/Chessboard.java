@@ -147,4 +147,28 @@ public class Chessboard {
         return pawns;
     }
 
+    /***
+     * transform chessboard to array of fields states
+     */
+    public Field.State[][] getFields() {
+        Field.State[][] states = new Field.State[BOARD_HEIGHT][BOARD_HEIGHT];
+
+        for (int row = 0; row < BOARD_HEIGHT; row++) {
+            for (int column = 0; column < BOARD_WIDTH; column++) {
+                Pawn pawn = board[row][column];
+                if (pawn == null) {
+                    states[row][column] = Field.State.EMPTY;
+                } else if (pawn instanceof King) {
+                    states[row][column] = pawn.getPlayer() ==
+                        Player.BLACK ? Field.State.BLACK_KING : Field.State.WHITE_KING;
+                } else {
+                    states[row][column] = pawn.getPlayer() ==
+                        Player.BLACK ? Field.State.BLACK_PAWN : Field.State.WHITE_PAWN;
+                }
+            }
+        }
+
+        return states;
+    }
+
 }
