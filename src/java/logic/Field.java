@@ -18,7 +18,7 @@ public class Field {
         return canMove;
     }
 
-    enum State {
+    public enum State {
         EMPTY, BLACK_PAWN, WHITE_PAWN, BLACK_KING, WHITE_KING
     }
 }
