@@ -45,7 +45,7 @@ public class Chessboard {
         return board;
     }
 
-    private boolean fieldOutOfBoard(Position pos) {
+    public boolean fieldOutOfBoard(Position pos) {
         int x = pos.getX();
         int y = pos.getY();
 
