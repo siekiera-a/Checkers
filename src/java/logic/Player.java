@@ -1,5 +1,5 @@
 package logic;
 
-enum Player {
+public enum Player {
     BLACK, WHITE
 }
