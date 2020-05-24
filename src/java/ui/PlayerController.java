@@ -109,7 +109,7 @@ public class PlayerController {
     }
 
     /**
-     * get
+     * get chessboard position
      *
      * @return calculated position
      */
