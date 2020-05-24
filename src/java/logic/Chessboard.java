@@ -139,7 +139,7 @@ class Chessboard {
         for (int row = 0; row < BOARD_HEIGHT; row++) {
             for (int column = 0; column < BOARD_WIDTH; column++) {
                 Pawn pawn = board[row][column];
-                if (pawn.getPlayer() == player) {
+                if (pawn != null && pawn.getPlayer() == player) {
                     pawns.add(pawn);
                 }
             }

@@ -128,4 +128,30 @@ public class GameController {
         return chessboard.getFields();
     }
 
+    /**
+     * Get available moves for current player
+     *
+     * @return list of moves
+     */
+    public List<Move> getMoves() {
+        List<Pawn> playerPawns = chessboard.getPlayerPawns(player);
+        List<Move> playerMoves = playerPawns.stream()
+            .map(this::availableMoves)
+            .filter(moves -> !moves.getAvailablePositions().isEmpty())
+            .collect(Collectors.toList());
+
+        // some pawn must capture
+        if (playerMoves.stream().anyMatch(Move::captureMoves)) {
+            return playerMoves.stream()
+                .filter(Move::captureMoves)
+                .collect(Collectors.toList());
+        }
+
+        return playerMoves;
+    }
+
+    public Player whoseTurn() {
+        return player;
+    }
+
 }
