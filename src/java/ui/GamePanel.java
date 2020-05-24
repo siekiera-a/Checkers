@@ -39,10 +39,10 @@ public class GamePanel extends JPanel {
         for (int row = 0; row < fields.length; row++) {
             for (int column = 0; column < fields[row].length; column++) {
                 Color color = (row + column) % 2 == 0 ? Color.LIGHT_GRAY : Color.GRAY;
-                drawField(row, column, color, g);
-                Field.State state = fields[row][column].getState();
-                if (state != Field.State.EMPTY) {
-                    drawState(row, column, state, g);
+                drawRect(row, column, color, g);
+                Field field = fields[row][column];
+                if (field != Field.EMPTY) {
+                    drawField(row, column, field, g);
                 }
             }
         }
@@ -59,13 +59,13 @@ public class GamePanel extends JPanel {
         return positions;
     }
 
-    private void drawField(int row, int column, Color color, Graphics g) {
+    private void drawRect(int row, int column, Color color, Graphics g) {
         g.setColor(color);
         int[] positions = calcPositions(row, column);
         g.fillRect(positions[0], positions[1], fieldWidth, fieldHeight);
     }
 
-    private void drawState(int row, int column, Field.State state, Graphics g) {
+    private void drawField(int row, int column, Field state, Graphics g) {
         int[] positions = calcPositions(row, column);
         int x = positions[0];
         int y = positions[1];

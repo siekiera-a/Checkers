@@ -3,9 +3,9 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends Pawn {
+class King extends Pawn {
 
-    public King(Player player) {
+    King(Player player) {
         super(player);
     }
 

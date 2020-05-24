@@ -3,10 +3,10 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chessboard {
+class Chessboard {
 
-    public final static int BOARD_WIDTH = 8;
-    public final static int BOARD_HEIGHT = 8;
+    private final static int BOARD_WIDTH = 8;
+    private final static int BOARD_HEIGHT = 8;
     private Pawn[][] board;
 
     private Chessboard() {
@@ -18,7 +18,7 @@ public class Chessboard {
      *
      * @return new chessboard with placed pawns
      */
-    public static Chessboard createChessboard() {
+    static Chessboard createChessboard() {
         return new Chessboard();
     }
 
@@ -48,7 +48,7 @@ public class Chessboard {
         return board;
     }
 
-    public boolean fieldOutOfBoard(Position pos) {
+    boolean fieldOutOfBoard(Position pos) {
         int x = pos.getX();
         int y = pos.getY();
 
@@ -58,7 +58,7 @@ public class Chessboard {
     /**
      * Check if position exists on the board and is empty
      */
-    public boolean fieldEmpty(Position pos) {
+    boolean fieldEmpty(Position pos) {
         return pos != null && !fieldOutOfBoard(pos) && board[pos.getY()][pos.getX()] == null;
     }
 
@@ -67,7 +67,7 @@ public class Chessboard {
      *
      * @return If pawn is on the board return its position, otherwise null
      */
-    public Position getPawnPosition(Pawn pawn) {
+    Position getPawnPosition(Pawn pawn) {
         if (pawn == null) {
             return null;
         }
@@ -86,7 +86,7 @@ public class Chessboard {
     /**
      * Remove pawn from the board
      */
-    public void removePawn(Pawn pawn) {
+    void removePawn(Pawn pawn) {
         Position pawnPos = getPawnPosition(pawn);
 
         if (pawnPos != null) {
@@ -99,7 +99,7 @@ public class Chessboard {
      *
      * @return Pawn or null
      */
-    public Pawn getPawn(Position pos) {
+    Pawn getPawn(Position pos) {
         if (pos == null || fieldOutOfBoard(pos)) {
             return null;
         }
@@ -110,7 +110,7 @@ public class Chessboard {
     /**
      * Move pawn at new position if exists and is on the board
      */
-    public void movePawn(Pawn pawn, Position newPosition) {
+    void movePawn(Pawn pawn, Position newPosition) {
         Position currentPosition = getPawnPosition(pawn);
 
         if (currentPosition != null && fieldEmpty(newPosition)) {
@@ -122,7 +122,7 @@ public class Chessboard {
     /***
      * Remove the pawn from the chessboard and place the king in his place
      */
-    public void promoteToKing(Pawn pawn) {
+    void promoteToKing(Pawn pawn) {
         Position pawnPosition = getPawnPosition(pawn);
         if (pawnPosition != null) {
             King king = new King(pawn.getPlayer());
@@ -134,7 +134,7 @@ public class Chessboard {
     /**
      * @return List of player pawns
      */
-    public List<Pawn> getPlayerPawns(Player player) {
+    List<Pawn> getPlayerPawns(Player player) {
         List<Pawn> pawns = new ArrayList<>();
         for (int row = 0; row < BOARD_HEIGHT; row++) {
             for (int column = 0; column < BOARD_WIDTH; column++) {
@@ -148,22 +148,22 @@ public class Chessboard {
     }
 
     /***
-     * transform chessboard to array of fields states
+     * transform chessboard to array of fields
      */
-    public Field.State[][] getFields() {
-        Field.State[][] states = new Field.State[BOARD_HEIGHT][BOARD_HEIGHT];
+    Field[][] getFields() {
+        Field[][] states = new Field[BOARD_HEIGHT][BOARD_HEIGHT];
 
         for (int row = 0; row < BOARD_HEIGHT; row++) {
             for (int column = 0; column < BOARD_WIDTH; column++) {
                 Pawn pawn = board[row][column];
                 if (pawn == null) {
-                    states[row][column] = Field.State.EMPTY;
+                    states[row][column] = Field.EMPTY;
                 } else if (pawn instanceof King) {
                     states[row][column] = pawn.getPlayer() ==
-                        Player.BLACK ? Field.State.BLACK_KING : Field.State.WHITE_KING;
+                        Player.BLACK ? Field.BLACK_KING : Field.WHITE_KING;
                 } else {
                     states[row][column] = pawn.getPlayer() ==
-                        Player.BLACK ? Field.State.BLACK_PAWN : Field.State.WHITE_PAWN;
+                        Player.BLACK ? Field.BLACK_PAWN : Field.WHITE_PAWN;
                 }
             }
         }

@@ -125,24 +125,7 @@ public class GameController {
     }
 
     public Field[][] getFields() {
-        Field.State[][] states = chessboard.getFields();
-
-        Field[][] fields = new Field[states.length][states[0].length];
-
-        for (int row = 0; row < states.length; row++) {
-            for (int column = 0; column < states[row].length; column++) {
-                Pawn pawn = chessboard.getPawn(new Position(column, row));
-                boolean canMove = false;
-                if (pawn != null) {
-                    if (capturePositions(pawn).size() > 0 && pawn.getPlayer() == player) {
-                        canMove = true;
-                    }
-                }
-                fields[row][column] = new Field(states[row][column], canMove);
-            }
-        }
-
-        return fields;
+        return chessboard.getFields();
     }
 
 }

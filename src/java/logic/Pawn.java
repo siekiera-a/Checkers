@@ -8,17 +8,17 @@ public class Pawn {
     private final Player player;
     private final Direction direction;
 
-    public Pawn(Player player, Direction direction) {
+    Pawn(Player player, Direction direction) {
         this.player = player;
         this.direction = direction;
     }
 
-    protected Pawn(Player player) {
+    Pawn(Player player) {
         this.player = player;
         direction = Direction.TOP;
     }
 
-    protected List<Position> movePositionsByDirection(Position currentPosition, Direction direction) {
+    List<Position> movePositionsByDirection(Position currentPosition, Direction direction) {
         List<Position> positions = new ArrayList<>();
 
         Position leftPos;
@@ -42,7 +42,7 @@ public class Pawn {
         return movePositionsByDirection(currentPosition, direction);
     }
 
-    public Player getPlayer() {
+    Player getPlayer() {
         return player;
     }
 
