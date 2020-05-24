@@ -72,6 +72,10 @@ public class GameController {
         return new Move(pawnPosition, capturePositions);
     }
 
+    private void switchPlayer() {
+        player = (player == Player.BLACK) ? Player.WHITE : Player.BLACK;
+    }
+
     /***
      * Move pawn to new position if possible
      * @param currentPosition current pawn position
@@ -84,6 +88,34 @@ public class GameController {
             Move move = availableMoves(pawn);
             if (move.getAvailablePositions().contains(newPosition) && !move.captureMoves()) {
                 chessboard.movePawn(pawn, newPosition);
+                promoteToKingIfPossible(pawn);
+                switchPlayer();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Promote to king if pawn moved to opponent edge of the chessboard
+     *
+     * @return true if promoted, false otherwise
+     */
+    private boolean promoteToKingIfPossible(Pawn pawn) {
+        if (!(pawn instanceof King)) {
+            Position pawnPosition = chessboard.getPawnPosition(pawn);
+            boolean promote = false;
+            if (pawn.getDirection() == Pawn.Direction.TOP) {
+                if (pawnPosition.getY() == 0) {
+                    promote = true;
+                }
+            } else {
+                if (pawnPosition.getY() == 7) {
+                    promote = true;
+                }
+            }
+            if (promote) {
+                chessboard.promoteToKing(pawn);
                 return true;
             }
         }
@@ -94,9 +126,9 @@ public class GameController {
      * Jump over enemy if possible
      * @param currentPosition current pawn position
      * @param newPosition new pawn position
-     * @return true if jumped, false otherwise
+     * @return List of available moves or null if jump failed
      */
-    public boolean jump(Position currentPosition, Position newPosition) {
+    public Move jump(Position currentPosition, Position newPosition) {
         Pawn pawn = chessboard.getPawn(currentPosition);
         if (pawn != null) {
             Move move = availableMoves(pawn);
@@ -104,13 +136,26 @@ public class GameController {
                 int[] vector = getVector(currentPosition, newPosition);
                 int enemyX = currentPosition.getX() + vector[0] / 2;
                 int enemyY = currentPosition.getY() + vector[1] / 2;
+
                 Position enemyPosition = new Position(enemyX, enemyY);
+
                 chessboard.removePawn(chessboard.getPawn(enemyPosition));
                 chessboard.movePawn(pawn, newPosition);
-                return true;
+
+                if (promoteToKingIfPossible(pawn)) {
+                    pawn = chessboard.getPawn(newPosition);
+                }
+
+                Move nextMove = availableMoves(pawn);
+
+                if (!nextMove.captureMoves()) {
+                    switchPlayer();
+                }
+
+                return nextMove;
             }
         }
-        return false;
+        return null;
     }
 
     /***

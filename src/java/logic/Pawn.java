@@ -46,6 +46,10 @@ public class Pawn {
         return player;
     }
 
+    Direction getDirection() {
+        return direction;
+    }
+
     enum Direction {
         TOP, BOTTOM
     }
