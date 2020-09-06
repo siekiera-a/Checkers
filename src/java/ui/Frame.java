@@ -1,5 +1,7 @@
 package ui;
 
+import record.Reader;
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -7,6 +9,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
+import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.HeadlessException;
 import java.io.File;
 import java.util.List;
@@ -23,6 +27,8 @@ public class Frame extends JFrame {
 
         this.width = width;
         this.height = height;
+
+        setLayout(new BorderLayout(0, 0));
 
         panel = new PlayerView(width, height);
         add(panel);
@@ -47,7 +53,21 @@ public class Frame extends JFrame {
 
         rules.addActionListener(e -> displayRules());
         read.addActionListener(e -> readGame().ifPresent(file -> {
-            // implement view change
+            Component oldView = panel;
+            try {
+                Reader reader = new Reader(file.toPath());
+                panel = new ReplayView(width, height, reader);
+
+                remove(oldView);
+
+                add(new StatisticsView(width, reader, panel::repaint), BorderLayout.PAGE_START);
+                add(panel, BorderLayout.PAGE_END);
+
+                pack();
+                repaint();
+            } catch (Exception er) {
+                JOptionPane.showMessageDialog(null, er.getMessage());
+            }
         }));
         exit.addActionListener(e -> System.exit(1));
 

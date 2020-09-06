@@ -1,33 +1,23 @@
 package ui;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import record.Reader;
 
-class ReplayView extends GameView implements MouseListener {
+import java.awt.Graphics;
 
-    ReplayView(int width, int height) {
+class ReplayView extends GameView {
+
+    private final Reader reader;
+
+    ReplayView(int width, int height, Reader reader) {
         super(width, height);
-        addMouseListener(this);
+        this.reader = reader;
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawChessboard(g);
+        drawCheckers(reader.getMove().getBoard(), g);
     }
 
 }

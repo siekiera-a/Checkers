@@ -30,6 +30,8 @@ public class PlayerController {
         game = GameController.startNewGame(Player.WHITE);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss");
         recorder = new Recorder(Path.of(String.format("warcabki-%s.json", format.format(new Date()))));
+
+        recorder.capture(game.getFields(), game.whoseTurn());
     }
 
     /**
@@ -113,6 +115,7 @@ public class PlayerController {
                         lastClickedPawnPosition = null;
                     }
                     recorder.capture(game.getFields(), currentPlayer);
+                    recorder.save();
                 }
             });
     }
