@@ -27,7 +27,7 @@ public class PlayerController {
     public PlayerController(int fieldWidth, int fieldHeight) {
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;
-        game = GameController.startNewGame(Player.BLACK);
+        game = GameController.startNewGame(Player.WHITE);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss");
         recorder = new Recorder(Path.of(String.format("warcabki-%s.json", format.format(new Date()))));
     }

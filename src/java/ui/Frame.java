@@ -1,19 +1,30 @@
 package ui;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import java.awt.HeadlessException;
+import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 public class Frame extends JFrame {
+
+    private GameView panel;
+    private int width;
+    private int height;
 
     public Frame(String title, int width, int height) throws HeadlessException {
         super(title);
 
-        GamePanel panel = new GamePanel(width, height);
+        this.width = width;
+        this.height = height;
+
+        panel = new PlayerView(width, height);
         add(panel);
 
         JMenuBar bar = new JMenuBar();
@@ -31,12 +42,17 @@ public class Frame extends JFrame {
         JMenu menu = new JMenu("Gra");
 
         JMenuItem rules = new JMenuItem("Zasady");
+        JMenuItem read = new JMenuItem("Wczytaj gre");
         JMenuItem exit = new JMenuItem("Zamknij");
 
         rules.addActionListener(e -> displayRules());
+        read.addActionListener(e -> readGame().ifPresent(file -> {
+            // implement view change
+        }));
         exit.addActionListener(e -> System.exit(1));
 
         menu.add(rules);
+        menu.add(read);
         menu.add(exit);
 
         return menu;
@@ -57,5 +73,25 @@ public class Frame extends JFrame {
         JOptionPane.showMessageDialog(null,
             String.join("\n", rules), "Zasady",
             JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private Optional<File> readGame() {
+        JFileChooser fileChooser = new JFileChooser(".");
+
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                return f.getName().endsWith("json");
+            }
+
+            @Override
+            public String getDescription() {
+                return "JSON files";
+            }
+        });
+
+        fileChooser.setMultiSelectionEnabled(false);
+        fileChooser.showOpenDialog(null);
+        return Optional.ofNullable(fileChooser.getSelectedFile());
     }
 }
