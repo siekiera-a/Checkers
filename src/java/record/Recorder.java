@@ -35,13 +35,12 @@ public class Recorder {
     public void capture(Field[][] fields, Player player) {
         Model model = new Model(System.currentTimeMillis(), fields, player);
         moves.add(model);
-        save();
     }
 
     /**
      * save current game state to file
      */
-    private void save() {
+    public void save() {
         try {
             Files.writeString(filePath, gson.toJson(moves));
         } catch (IOException e) {
