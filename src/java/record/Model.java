@@ -3,7 +3,7 @@ package record;
 import logic.Field;
 import logic.Player;
 
-class Model {
+public class Model {
 
     private final long timestamp;
     private final Field[][] board;

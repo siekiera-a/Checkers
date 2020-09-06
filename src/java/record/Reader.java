@@ -1,7 +1,7 @@
 package record;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -13,7 +13,8 @@ import java.util.List;
 public class Reader {
 
     private final Gson gson;
-    private List<Model> data;
+    private final List<Model> data;
+    private int cursor;
 
     /**
      * Create moves reader
@@ -30,7 +31,12 @@ public class Reader {
             try {
                 data = gson.fromJson(Files.readString(filePath), new TypeToken<List<Model>>() {
                 }.getType());
-            } catch (JsonSyntaxException e) {
+
+                if (data.stream()
+                    .anyMatch(model -> model.getBoard() == null || model.getPlayer() == null || model.getTimestamp() == 0)) {
+                    throw new IllegalArgumentException("File contains invalid data!");
+                }
+            } catch (JsonParseException e) {
                 throw new IllegalArgumentException("File contains invalid data!");
             } catch (IOException e) {
                 throw new RuntimeException("Couldn't read data from file!");
@@ -38,6 +44,28 @@ public class Reader {
         } else {
             throw new NoSuchFileException("File doesn't exists!");
         }
+    }
+
+    private void trimCursor() {
+        if (cursor < 0) {
+            cursor = 0;
+        } else if (cursor >= data.size()) {
+            cursor = data.size() - 1;
+        }
+    }
+
+    public void nextMove() {
+        cursor++;
+        trimCursor();
+    }
+
+    public void previousMove() {
+        cursor--;
+        trimCursor();
+    }
+
+    public Model getMove() {
+        return data.get(cursor);
     }
 
 }
