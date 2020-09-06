@@ -1,21 +1,29 @@
 package record;
 
-import java.util.List;
+import logic.Field;
+import logic.Player;
 
 class Model {
-    private final boolean gameFinished;
-    private final List<MoveData> moves;
 
-    Model(boolean gameFinished, List<MoveData> moves) {
-        this.gameFinished = gameFinished;
-        this.moves = moves;
+    private final long timestamp;
+    private final Field[][] board;
+    private final Player player;
+
+    Model(long timestamp, Field[][] board, Player player) {
+        this.timestamp = timestamp;
+        this.board = board;
+        this.player = player;
     }
 
-    boolean isGameFinished() {
-        return gameFinished;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    List<MoveData> getMoves() {
-        return moves;
+    public Field[][] getBoard() {
+        return board;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

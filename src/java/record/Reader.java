@@ -1,56 +1,43 @@
 package record;
 
 import com.google.gson.Gson;
-import logic.Field;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Reader {
 
     private final Gson gson;
-    private Model object;
+    private List<Model> data;
 
     /**
      * Create moves reader
      *
      * @param filePath path to file with data
-     * @throws IOException if file does not exists or json is invalid
+     * @throws NoSuchFileException      if file does not exists
+     * @throws IllegalArgumentException if file contains invalid data type
+     * @throws RuntimeException         if couldn't read data from file
      */
-    public Reader(Path filePath) throws IOException {
+    public Reader(Path filePath) throws NoSuchFileException {
         gson = new Gson();
 
         if (Files.isRegularFile(filePath)) {
             try {
-                String objectString = String.join("", Files.readAllLines(filePath));
-                object = gson.fromJson(objectString, Model.class);
-            } catch (Exception e) {
-                throw new IOException("Couldn't read data from file!");
+                data = gson.fromJson(Files.readString(filePath), new TypeToken<List<Model>>() {
+                }.getType());
+            } catch (JsonSyntaxException e) {
+                throw new IllegalArgumentException("File contains invalid data!");
+            } catch (IOException e) {
+                throw new RuntimeException("Couldn't read data from file!");
             }
+        } else {
+            throw new NoSuchFileException("File doesn't exists!");
         }
-    }
-
-    /**
-     * get saved list of fields
-     *
-     * @return fields list
-     */
-    public List<Field[][]> getFields() {
-        return object.getMoves().stream()
-            .map(move -> gson.fromJson(move.getFields(), Field[][].class))
-            .collect(Collectors.toList());
-    }
-
-    /**
-     * Get game status
-     *
-     * @return true if game finished, otherwise false
-     */
-    public boolean isGameFinished() {
-        return object.isGameFinished();
     }
 
 }
