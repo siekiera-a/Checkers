@@ -5,9 +5,13 @@ import logic.GameController;
 import logic.Move;
 import logic.Player;
 import logic.Position;
+import record.Recorder;
 
 import java.awt.event.MouseEvent;
+import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PlayerController {
@@ -18,11 +22,14 @@ public class PlayerController {
     private Position lastClickedPawnPosition;
     private List<Move> moves;
     private Move obligatoryMove;
+    private Recorder recorder;
 
     public PlayerController(int fieldWidth, int fieldHeight) {
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;
-        game = GameController.startNewGame(Player.WHITE);
+        game = GameController.startNewGame(Player.BLACK);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss");
+        recorder = new Recorder(Path.of(String.format("warcabki-%s.json", format.format(new Date()))));
     }
 
     /**
@@ -90,6 +97,7 @@ public class PlayerController {
             .findFirst()
             .ifPresent(move -> {
                 if (move.getAvailablePositions().contains(position)) {
+                    Player currentPlayer = game.whoseTurn();
                     if (move.captureMoves()) {
                         Move nextMove = game.jump(lastClickedPawnPosition, position);
                         if (nextMove.captureMoves()) {
@@ -104,6 +112,7 @@ public class PlayerController {
                         obligatoryMove = null;
                         lastClickedPawnPosition = null;
                     }
+                    recorder.capture(game.getFields(), currentPlayer);
                 }
             });
     }
