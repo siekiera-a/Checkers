@@ -25,20 +25,26 @@ The jar file will be placed in target directory.
 
 ### Screenshots
 Available moves are marked with a green border
-![game](img/game.png)
+
+<img alt="game" src="img/game.png" width="500">
 
 When you click a pawn
-![pawn clicked](img/clicked_pawn.png)
+
+<img alt="pawn clicked" src="img/clicked_pawn.png" width="500">
 
 When you can capture, you have to do it.
-![capture](img/capture_move.png)
+
+<img alt="capture" src="img/capture_move.png" width="500">
 
 Load replay
-![load game](img/load_game.png)
+
+<img alt="load game" src="img/load_game.png" width="500">
 
 Select file with replay data
-![select file](img/load_file.png)
+
+<img alt="select file game" src="img/load_file.png" width="500">
 
 We can see bar on the top of the app with prev/next buttons and label with information whose turn it was.
-![replay view](img/replay.png)
+
+<img alt="replay view" src="img/replay.png" width="500">
 
