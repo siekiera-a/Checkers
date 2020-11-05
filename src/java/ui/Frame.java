@@ -60,7 +60,7 @@ public class Frame extends JFrame {
 
                 remove(oldView);
 
-                add(new StatisticsView(width, reader, panel::repaint), BorderLayout.PAGE_START);
+                add(new BarView(width, reader, panel::repaint), BorderLayout.PAGE_START);
                 add(panel, BorderLayout.PAGE_END);
 
                 pack();

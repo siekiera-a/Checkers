@@ -9,7 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
-class StatisticsView extends JPanel {
+class BarView extends JPanel {
 
     private final static String format = "<html>%s</html>";
     private final JButton prevButton;
@@ -22,7 +22,7 @@ class StatisticsView extends JPanel {
      * @param reader the object from which data for the replay will be read
      * @param repaint method which will be executed, when we click next/previous button
      */
-    StatisticsView(int width, Reader reader, Runnable repaint) {
+    BarView(int width, Reader reader, Runnable repaint) {
         setBackground(Color.DARK_GRAY);
         setLayout(new BorderLayout());
 
