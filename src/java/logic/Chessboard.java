@@ -48,6 +48,12 @@ class Chessboard {
         return board;
     }
 
+    /**
+     * Check if field on the given position is out of the board
+     *
+     * @param pos position to check
+     * @return true if field is out of the board, otherwise false
+     */
     boolean fieldOutOfBoard(Position pos) {
         int x = pos.getX();
         int y = pos.getY();
@@ -56,7 +62,9 @@ class Chessboard {
     }
 
     /**
-     * Check if position exists on the board and is empty
+     * Check if field on given position exists on the board and is empty
+     *
+     * @return true if field is empty and exists, otherwise false
      */
     boolean fieldEmpty(Position pos) {
         return pos != null && !fieldOutOfBoard(pos) && board[pos.getY()][pos.getX()] == null;
@@ -85,6 +93,8 @@ class Chessboard {
 
     /**
      * Remove pawn from the board
+     *
+     * @param pawn pawn to remove
      */
     void removePawn(Pawn pawn) {
         Position pawnPos = getPawnPosition(pawn);
@@ -109,6 +119,9 @@ class Chessboard {
 
     /**
      * Move pawn at new position if exists and is on the board
+     *
+     * @param pawn        pawn to move
+     * @param newPosition new pawn position
      */
     void movePawn(Pawn pawn, Position newPosition) {
         Position currentPosition = getPawnPosition(pawn);
@@ -121,6 +134,7 @@ class Chessboard {
 
     /***
      * Remove the pawn from the chessboard and place the king in his place
+     * @param pawn pawn to promote
      */
     void promoteToKing(Pawn pawn) {
         Position pawnPosition = getPawnPosition(pawn);
@@ -132,6 +146,8 @@ class Chessboard {
     }
 
     /**
+     * Get player pawns
+     *
      * @return List of player pawns
      */
     List<Pawn> getPlayerPawns(Player player) {
@@ -149,6 +165,8 @@ class Chessboard {
 
     /***
      * transform chessboard to array of fields
+     *
+     * @return chessboard state
      */
     Field[][] getFields() {
         Field[][] states = new Field[BOARD_HEIGHT][BOARD_HEIGHT];

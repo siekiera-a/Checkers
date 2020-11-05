@@ -14,6 +14,7 @@ public class Move {
 
     /***
      * check if there are capture moves
+     * @return true if capture move are available, otherwise false
      */
     public boolean captureMoves() {
         return availablePositions.stream()

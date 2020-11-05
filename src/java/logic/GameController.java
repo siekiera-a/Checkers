@@ -19,6 +19,9 @@ public class GameController {
 
     /**
      * remove positions that are of the board
+     *
+     * @param pawn pawn whose positions check
+     * @return List of positions that are on the board
      */
     private List<Position> trimmedPositions(Pawn pawn) {
         Position pawnPosition = chessboard.getPawnPosition(pawn);
@@ -30,6 +33,9 @@ public class GameController {
 
     /**
      * check if enemy is on given position
+     *
+     * @param enemyPos enemy pawn position
+     * @param pawn     player pawn
      */
     private boolean isEnemy(Position enemyPos, Pawn pawn) {
         Pawn enemy = chessboard.getPawn(enemyPos);
@@ -39,6 +45,7 @@ public class GameController {
     /**
      * check if on next diagonal field is enemy and behind enemy is empty field
      *
+     * @param pawn pawn to check
      * @return list of capture moves
      */
     private List<Position> capturePositions(Pawn pawn) {
@@ -57,6 +64,7 @@ public class GameController {
     /**
      * If have to capture, only capture moves are available
      *
+     * @param pawn pawn whose moves check
      * @return available moves
      */
     private Move availableMoves(Pawn pawn) {
@@ -72,6 +80,9 @@ public class GameController {
         return new Move(pawnPosition, capturePositions);
     }
 
+    /**
+     * change current player
+     */
     private void switchPlayer() {
         player = (player == Player.BLACK) ? Player.WHITE : Player.BLACK;
     }
@@ -99,6 +110,7 @@ public class GameController {
     /**
      * Promote to king if pawn moved to opponent edge of the chessboard
      *
+     * @param pawn pawn to promote
      * @return true if promoted, false otherwise
      */
     private boolean promoteToKingIfPossible(Pawn pawn) {
@@ -160,6 +172,9 @@ public class GameController {
 
     /***
      * calc vector between from and to position
+     *
+     * @param from start position
+     * @param to end position
      * @return vector [x, y]
      */
     private int[] getVector(Position from, Position to) {
@@ -169,6 +184,10 @@ public class GameController {
         return vector;
     }
 
+    /***
+     * Get chessboard fields
+     * @return chessboard fields
+     */
     public Field[][] getFields() {
         return chessboard.getFields();
     }
@@ -195,6 +214,11 @@ public class GameController {
         return playerMoves;
     }
 
+    /***
+     * Get whose turn it is
+     *
+     * @return current player
+     */
     public Player whoseTurn() {
         return player;
     }

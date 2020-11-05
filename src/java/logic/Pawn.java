@@ -18,6 +18,12 @@ public class Pawn {
         direction = Direction.TOP;
     }
 
+    /***
+     * Get list of positions where pawn can move
+     * @param currentPosition current pawn position
+     * @param direction direction in which pawn is moving
+     * @return list of position where pawn can move
+     */
     List<Position> movePositionsByDirection(Position currentPosition, Direction direction) {
         List<Position> positions = new ArrayList<>();
 
