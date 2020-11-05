@@ -95,6 +95,10 @@ public class Frame extends JFrame {
             JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /***
+     * Select file with replay data
+     * @return file with data
+     */
     private Optional<File> readGame() {
         JFileChooser fileChooser = new JFileChooser(".");
 

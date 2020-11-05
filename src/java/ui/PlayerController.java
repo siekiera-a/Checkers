@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PlayerController {
+class PlayerController {
 
     private int fieldWidth;
     private int fieldHeight;
@@ -28,8 +28,9 @@ public class PlayerController {
         this.fieldWidth = fieldWidth;
         this.fieldHeight = fieldHeight;
         game = GameController.startNewGame(Player.WHITE);
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy_HH.mm.ss");
-        recorder = new Recorder(Path.of(String.format("warcabki-%s.json", format.format(new Date()))));
+
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy [HH.mm.ss]");
+        recorder = new Recorder(Path.of(String.format("checkers-%s.json", format.format(new Date()))));
 
         recorder.capture(game.getFields(), game.whoseTurn());
     }

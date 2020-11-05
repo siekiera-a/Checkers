@@ -9,19 +9,20 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class StatisticsView extends JPanel {
+class StatisticsView extends JPanel {
 
     private final static String format = "<html>%s</html>";
     private final JButton prevButton;
     private final JButton nextButton;
     private final JLabel label;
-    private final Reader reader;
-    private final Runnable repaint;
 
+    /***
+     *
+     * @param width component width
+     * @param reader the object from which data for the replay will be read
+     * @param repaint method which will be executed, when we click next/previous button
+     */
     StatisticsView(int width, Reader reader, Runnable repaint) {
-        this.reader = reader;
-        this.repaint = repaint;
-
         setBackground(Color.DARK_GRAY);
         setLayout(new BorderLayout());
 

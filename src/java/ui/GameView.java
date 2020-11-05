@@ -10,7 +10,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-public class GameView extends JPanel {
+abstract class GameView extends JPanel {
 
     private final Color blackKingFill = new Color(35, 35, 35);
     private final Color whiteKingFill = new Color(190, 190, 190);
