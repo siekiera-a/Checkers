@@ -31,6 +31,7 @@ public class Recorder {
      * Capture player move
      *
      * @param fields game fields in capture moment
+     * @param player player who made the move
      */
     public void capture(Field[][] fields, Player player) {
         Model model = new Model(System.currentTimeMillis(), fields, player);
@@ -44,7 +45,8 @@ public class Recorder {
         try {
             Files.writeString(filePath, gson.toJson(moves));
         } catch (IOException e) {
-            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(null, "Błąd zapisu do pliku!"));
+            SwingUtilities.invokeLater(
+                () -> JOptionPane.showMessageDialog(null, "Błąd zapisu do pliku!"));
         }
     }
 }

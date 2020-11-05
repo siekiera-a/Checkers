@@ -33,7 +33,8 @@ public class Reader {
                 }.getType());
 
                 if (data.stream()
-                    .anyMatch(model -> model.getBoard() == null || model.getPlayer() == null || model.getTimestamp() == 0)) {
+                    .anyMatch(model ->
+                        model.getBoard() == null || model.getPlayer() == null || model.getTimestamp() == 0)) {
                     throw new IllegalArgumentException("File contains invalid data!");
                 }
             } catch (JsonParseException e) {
@@ -46,6 +47,7 @@ public class Reader {
         }
     }
 
+
     private void trimCursor() {
         if (cursor < 0) {
             cursor = 0;
@@ -54,16 +56,26 @@ public class Reader {
         }
     }
 
+    /**
+     * change active move to next one
+     */
     public void nextMove() {
         cursor++;
         trimCursor();
     }
 
+    /**
+     * change active move to previous one
+     */
     public void previousMove() {
         cursor--;
         trimCursor();
     }
 
+    /**
+     * Get active move
+     * @return active move
+     */
     public Model getMove() {
         return data.get(cursor);
     }

@@ -9,6 +9,11 @@ public class Model {
     private final Field[][] board;
     private final Player player;
 
+    /**
+     * @param timestamp time when the move was made
+     * @param board board state
+     * @param player player who made the move
+     */
     Model(long timestamp, Field[][] board, Player player) {
         this.timestamp = timestamp;
         this.board = board;
