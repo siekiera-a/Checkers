@@ -2,7 +2,7 @@
 
 Checkers game written in java 11 (ui - swing) with the ability to replay the game. 
 The game saves to the json file (in the same directory as the jar file) with the following name: 
-<b>checkers-dd-mm-yyyy [HH::MM:SS]</b>
+<b>checkers-dd-mm-yyyy [HH::MM:SS].json</b>
 
 - dd - day
 - mm - month
